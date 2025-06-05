@@ -10,8 +10,8 @@ export default function TabsLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: "#7138ED",
-        tabBarInactiveTintColor: "#ADADAD",
+        tabBarActiveTintColor: "#0F5329",
+        tabBarInactiveTintColor: "#0F5329B2",
         headerShadowVisible: false,
         headerTitleStyle: {
           fontWeight: "600",
@@ -28,6 +28,24 @@ export default function TabsLayout() {
       }}
     >
       <Tabs.Screen
+        name="heatmap"
+        options={{
+          title: "Heatmap",
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="map" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="shop"
+        options={{
+          title: "Shop",
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="store" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="index"
         options={{
           title: "Home",
@@ -37,29 +55,20 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="chat"
+        name="profile"
         options={{
-          title: "Chat",
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="mail-outline" size={24} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="group"
-        options={{
-          title: "Group",
-          tabBarIcon: ({ color }) => (
-            <FontAwesome name="users" size={22} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="account"
-        options={{
-          title: "Account",
+          title: "Profile",
           tabBarIcon: ({ color }) => (
             <Ionicons name="person" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="leaderboard"
+        options={{
+          title: "Leaders",
+          tabBarIcon: ({ color }) => (
+            <FontAwesome name="trophy" size={24} color={color} />
           ),
         }}
       />

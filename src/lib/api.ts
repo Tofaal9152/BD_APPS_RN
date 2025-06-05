@@ -1,16 +1,15 @@
 import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAuthStore } from "../store/authStore";
+
 const api = axios.create({
-  baseURL:
-    process.env.EXPO_PUBLIC_BACKEND_URL ||
-    "https://uddhar-backend.onrender.com/",
+  baseURL: process.env.EXPO_PUBLIC_BACKEND_URL,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
 api.interceptors.request.use(async (config) => {
-  const token = await AsyncStorage.getItem("accessToken");
+   const token = useAuthStore.getState().token;
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
