@@ -12,7 +12,7 @@ export function AuthRedirect() {
     const isLoggedIn = !!token;
 
     if (!isLoggedIn && !inAuthGroup) {
-      router.replace("/(auth)/login");
+      router.replace("/(auth)");
     } else if (isLoggedIn && inAuthGroup) {
       router.replace("/(tabs)");
     }

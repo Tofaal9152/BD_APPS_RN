@@ -7,10 +7,12 @@ import { Button } from "~/src/components/ui/button";
 import { Input } from "~/src/components/ui/input";
 import { useAuthStore } from "~/src/store/authStore";
 
-const SignInForm = () => {
-  const { login, isLoading } = useAuthStore();
+const RegisterForm = () => {
+  const router = useRouter();
+  const { register, isLoading } = useAuthStore();
   const [form, setForm] = useState({
-    emailOrPhone: "",
+    phone: "",
+    email: "",
     password: "",
     showPassword: false,
     rememberMe: true,
@@ -19,11 +21,12 @@ const SignInForm = () => {
   const updateForm = (field: keyof typeof form, value: any) =>
     setForm((prev) => ({ ...prev, [field]: value }));
 
-  const handleLogin = async () => {
-    const response = await login(form.emailOrPhone, form.password);
-    console.log("Login response:", response);
+  const handleRegister = async () => {
+    const response = await register(form.phone, form.email, form.password);
+    console.log("Registration response:", response);
     if (response.success) {
       Alert.alert("Success", response.message);
+      router.push("/(auth)/login");
     } else {
       Alert.alert("Error", response.message);
     }
@@ -32,11 +35,20 @@ const SignInForm = () => {
   return (
     <View className="gap-3">
       <Input
-        placeholder="Enter your email or phone number"
-        value={form.emailOrPhone}
-        onChangeText={(text) => updateForm("emailOrPhone", text)}
-        autoCapitalize="none"
+        placeholder="Enter your email "
+        value={form.email}
+        onChangeText={(text) => updateForm("email", text)}
+        keyboardType="email-address"
         className="text-sm"
+        placeholderTextColor=""
+      />
+      <Input
+        placeholder="Enter your Phone Number"
+        value={form.phone}
+        onChangeText={(text) => updateForm("phone", text)}
+        keyboardType="phone-pad"
+        className="text-sm"
+        placeholderTextColor=""
       />
 
       <View className="relative">
@@ -46,6 +58,7 @@ const SignInForm = () => {
           onChangeText={(text) => updateForm("password", text)}
           secureTextEntry={!form.showPassword}
           className="text-sm"
+          placeholderTextColor=""
         />
         <TouchableOpacity
           onPress={() => updateForm("showPassword", !form.showPassword)}
@@ -59,29 +72,9 @@ const SignInForm = () => {
         </TouchableOpacity>
       </View>
 
-      <View className="flex-row justify-between items-center">
-        <TouchableOpacity
-          onPress={() => updateForm("rememberMe", !form.rememberMe)}
-          className="flex-row items-center"
-        >
-          <FontAwesome
-            name={form.rememberMe ? "toggle-on" : "toggle-off"}
-            size={20}
-            color="#0F5329"
-          />
-          <Text className="ml-1 text-xs text-[#0F5329]">Remember Me</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity>
-          <Text className="text-xs text-[#0F5329] font-medium">
-            Forgot password?
-          </Text>
-        </TouchableOpacity>
-      </View>
-
       <Button
         disabled={isLoading}
-        onPress={handleLogin}
+        onPress={handleRegister}
         className="bg-[#949D6A] rounded-lg py-2 gap-2 flex-row items-center justify-center"
       >
         {isLoading && (
@@ -94,10 +87,10 @@ const SignInForm = () => {
             />
           </View>
         )}
-        <Text className="text-white text-sm">Log In</Text>
+        <Text className="text-white text-sm">Sign Up</Text>
       </Button>
     </View>
   );
 };
 
-export default SignInForm;
+export default RegisterForm;

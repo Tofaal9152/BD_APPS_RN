@@ -8,16 +8,15 @@ export const useAuthStore = create<AuthState>((set) => ({
   isLoading: false,
   isCheckingAuth: true,
 
-  register: async (name: any, email: any, password: any) => {
+  register: async (phone: any, email: any, password: any) => {
     set({ isLoading: true });
     try {
       const response = await axios.post(
-        `${process.env.EXPO_PUBLIC_BACKEND_URL}api/v1/user/register`,
+        `${process.env.EXPO_PUBLIC_BACKEND_URL}/api/auth/register`,
         {
-          fullName: name,
+          phone,
           email,
           password,
-          fcmToken: "1",
         }
       );
 
@@ -31,25 +30,25 @@ export const useAuthStore = create<AuthState>((set) => ({
       console.error("Registration error:", error);
       return {
         success: false,
-        message: error?.response?.data?.message || "Registration failed",
+        message: error?.response?.data?.error || "Registration failed",
       };
     } finally {
       set({ isLoading: false });
     }
   },
 
-  login: async (email: string, password: string) => {
+  login: async (emailOrPhone: string, password: string) => {
     set({ isLoading: true });
     try {
       const response = await axios.post(
-        `${process.env.EXPO_PUBLIC_BACKEND_URL}api/v1/user/login`,
+        `${process.env.EXPO_PUBLIC_BACKEND_URL}/api/auth/login`,
         {
-          email,
+          emailOrPhone,
           password,
         }
       );
 
-      const token = response?.data?.data?.token;
+      const token = response?.data?.token;
       await AsyncStorage.setItem("token", token);
       set({ token });
       return {
@@ -60,7 +59,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       console.error("Login error:", error);
       return {
         success: false,
-        message: error?.response?.data?.message || "Login failed",
+        message: error?.response?.data?.error || "Invalid credentials",
       };
     } finally {
       set({ isLoading: false });
