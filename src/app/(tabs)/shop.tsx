@@ -1,12 +1,12 @@
 import React from "react";
 import {
-  View,
-  Text,
+  Dimensions,
   FlatList,
   Image,
-  TouchableOpacity,
   StyleSheet,
-  Dimensions,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 const ecoProducts = [

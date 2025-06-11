@@ -1,17 +1,17 @@
+import { FontAwesome5, Ionicons } from "@expo/vector-icons";
+import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import {
-  View,
-  Text,
-  Switch,
-  TouchableOpacity,
   ActivityIndicator,
   Alert,
+  Switch,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
-import { useQuery } from "@tanstack/react-query";
+import { Button } from "~/src/components/ui/button";
 import { fetcher } from "~/src/lib/Fetcher";
 import { useAuthStore } from "~/src/store/authStore";
-import { Button } from "~/src/components/ui/button";
 
 const Profile = () => {
   const { logout } = useAuthStore();

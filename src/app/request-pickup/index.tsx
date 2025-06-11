@@ -1,8 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { ScrollView, Text, View, Alert, TouchableOpacity } from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
 import * as Location from "expo-location";
-import { Label } from "~/src/components/ui/label";
+import { useRouter } from "expo-router";
+import { ArrowLeft } from "lucide-react-native";
+import React, { useEffect, useState } from "react";
+import { Alert, Text, View } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Button } from "~/src/components/ui/button";
 import { Input } from "~/src/components/ui/input";
+import { Label } from "~/src/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -12,13 +18,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/src/components/ui/select";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import api from "~/src/lib/api";
 import { useAuthStore } from "~/src/store/authStore";
-import { Loader } from "lucide-react-native";
-import { FontAwesome } from "@expo/vector-icons";
-import { Button } from "~/src/components/ui/button";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 export default function RequestPickup() {
   const { id } = useAuthStore();
   const insets = useSafeAreaInsets();
@@ -90,7 +91,10 @@ export default function RequestPickup() {
       setLoading(false);
     }
   };
-
+  const router = useRouter();
+  const handleBack = () => {
+    router.back();
+  };
   return (
     <KeyboardAwareScrollView
       contentContainerStyle={{ flexGrow: 1, padding: 16 }}
@@ -99,13 +103,26 @@ export default function RequestPickup() {
       extraScrollHeight={100}
       keyboardShouldPersistTaps="handled"
     >
+      <Button
+        onPress={handleBack}
+        className="flex-row items-center mb-4 gap-2 bg-white"
+      >
+        <ArrowLeft />
+        <Text className="text-[#0F5329] text-lg font-semibold">
+          Back to Home
+        </Text>
+      </Button>
+
       <Text className="text-2xl font-bold mb-4">🚛 Request a Pickup</Text>
 
       {/* Waste Type Selector */}
       <View className="mb-4">
-        <Label htmlFor="wasteType">Type of Waste</Label>
+        <Label className="text-[#0F5329]" htmlFor="wasteType">
+          Type of Waste
+        </Label>
         <Select
           defaultValue={{ label: "Organic", value: "organic" }}
+          className="text-[#0F5329] dark:bg-white dark:border-gray-300"
           onValueChange={(
             option: { label: string; value: string } | undefined
           ) => {
@@ -139,64 +156,82 @@ export default function RequestPickup() {
       </View>
 
       <View className="mb-4">
-        <Label htmlFor="estimatedWeight">Estimated Weight (kg)</Label>
+        <Label className="text-[#0F5329]" htmlFor="estimatedWeight">
+          Estimated Weight (kg)
+        </Label>
         <Input
           id="estimatedWeight"
           keyboardType="numeric"
           value={estimatedWeight}
           onChangeText={setEstimatedWeight}
           placeholder="Enter weight in kg"
+          className="text-[#0F5329] dark:bg-white dark:border-gray-400 "
         />
       </View>
 
       <View className="mb-4">
-        <Label htmlFor="address">Address</Label>
+        <Label className="text-[#0F5329]" htmlFor="address">
+          Address
+        </Label>
         <Input
           id="address"
           value={address}
           onChangeText={setAddress}
           placeholder="Pickup address"
+          className="text-[#0F5329] dark:bg-white dark:border-gray-400 "
         />
       </View>
 
       <View className="mb-4">
-        <Label htmlFor="landmark">Landmark</Label>
+        <Label className="text-[#0F5329]" htmlFor="landmark">
+          Landmark
+        </Label>
         <Input
           id="landmark"
           value={landmark}
           onChangeText={setLandmark}
           placeholder="Nearby landmark"
+          className="text-[#0F5329] dark:bg-white dark:border-gray-400 "
         />
       </View>
 
       <View className="mb-4">
-        <Label htmlFor="instructions">Instructions</Label>
+        <Label className="text-[#0F5329]" htmlFor="instructions">
+          Instructions
+        </Label>
         <Input
           id="instructions"
           value={instructions}
           onChangeText={setInstructions}
           placeholder="Any special instructions"
+          className="text-[#0F5329] dark:bg-white dark:border-gray-400 "
         />
       </View>
 
       <View className="mb-4">
-        <Label htmlFor="preferredTime">Preferred Time</Label>
+        <Label className="text-[#0F5329]" htmlFor="preferredTime">
+          Preferred Time
+        </Label>
         <Input
           id="preferredTime"
           value={preferredTime}
           onChangeText={setPreferredTime}
           placeholder="2025-06-17T08:30:00.000Z"
+          className="text-[#0F5329] dark:bg-white dark:border-gray-400 "
         />
       </View>
 
       <View className="mb-5">
-        <Label htmlFor="notes">Notes</Label>
+        <Label className="text-[#0F5329]" htmlFor="notes">
+          Notes
+        </Label>
         <Input
           id="notes"
           value={notes}
           onChangeText={setNotes}
           placeholder="Extra notes (optional)"
           multiline
+          className="text-[#0F5329] dark:bg-white dark:border-gray-400 "
         />
       </View>
       <Button

@@ -3,7 +3,7 @@ type AuthResponse = {
   message: string;
 };
 export type AuthState = {
- 
+  role: string | null;
   id: string | null;
   token: string | null;
   isLoading: boolean;

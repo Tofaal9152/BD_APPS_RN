@@ -1,9 +1,7 @@
-import { Tabs, Redirect } from "expo-router";
-import { FontAwesome, MaterialIcons, Ionicons } from "@expo/vector-icons";
+import { FontAwesome, Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Tabs } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useColorScheme } from "~/src/lib/useColorScheme";
 export default function TabsLayout() {
-  const { isDarkColorScheme } = useColorScheme();
   const insects = useSafeAreaInsets();
   return (
     <Tabs

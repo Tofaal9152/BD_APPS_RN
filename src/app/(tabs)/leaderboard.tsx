@@ -1,6 +1,6 @@
-import React from "react";
-import { View, Text } from "react-native";
 import { FlashList } from "@shopify/flash-list";
+import React from "react";
+import { Text, View } from "react-native";
 
 const data = [
   { name: "Ayesha Rahman", points: 980, location: "Dhaka" },

@@ -1,20 +1,16 @@
 import * as Location from "expo-location";
-import { Link } from "expo-router";
+import { useRouter } from "expo-router";
 import { UserCircle2Icon } from "lucide-react-native";
 import { default as React, useEffect, useState } from "react";
-import { Image, ScrollView, TouchableOpacity, View } from "react-native";
+import { ScrollView, View } from "react-native";
+import CompanyScreen from "~/src/components/screens/tabs/CompanyScreen";
+import HouseholdScreen from "~/src/components/screens/tabs/HouseholdScreen";
+import { Button } from "~/src/components/ui/button";
 import { Text } from "~/src/components/ui/text";
 import { useAuthStore } from "~/src/store/authStore";
-const scrapItems = [
-  { label: "PLASTIC", image: require("~/public/sell_scrapes/plastic.png") },
-  { label: "PAPER", image: require("~/public/sell_scrapes/paper.png") },
-  { label: "E-TRASH", image: require("~/public/sell_scrapes/e-trash.png") },
-  { label: "ORGANIC", image: require("~/public/sell_scrapes/organic.png") },
-];
 
 export default function HomePage() {
-  const {logout} = useAuthStore()
-  
+  const [roles, setRoles] = useState<string | null>(null);
   const [location, setLocation] = useState<string>("Loading...");
 
   useEffect(() => {
@@ -55,7 +51,24 @@ export default function HomePage() {
     })();
   }, []);
 
-  console.log(location);
+  const { role } = useAuthStore();
+  useEffect(() => {
+    if (role) {
+      setRoles(role);
+    } else {
+      setRoles("household");
+    }
+  }, [role]);
+
+  const router = useRouter();
+  const handleClick = () => {
+    if (roles === "household") {
+      // Navigate to household request page
+      router.push("/request-pickup");
+    } else {
+      alert("You are not authorized to request a pickup as a company.");
+    }
+  };
   return (
     <ScrollView
       style={{ padding: 20 }}
@@ -139,55 +152,18 @@ export default function HomePage() {
           })()}
         </View>
 
-        <Link
-          href="/request-pickup"
+        <Button
+          onPress={handleClick}
           className="bg-[#0F5329] px-6 py-3 rounded-full shadow-lg mt-2"
         >
           <Text className="text-white text-center text-base font-semibold tracking-wide">
             🚛 REQUEST A PICKUP
           </Text>
-        </Link>
+        </Button>
       </View>
 
-      {/* Next Pickup Card */}
-
-      {/* Sell Scraps Section */}
-      <Text className="text-lg font-bold mb-3 text-[#0F5329]">Sell Scraps</Text>
-      <View className="flex-row justify-between mb-6">
-        {scrapItems.map((item, idx) => (
-          <View key={idx} className="items-center">
-            <TouchableOpacity className="w-24 h-24 bg-gray-100 rounded-xl overflow-hidden mb-2">
-              <Image
-                source={item.image}
-                className="w-full h-full"
-                resizeMode="cover"
-              />
-            </TouchableOpacity>
-            <Text className="text-xs">{item.label}</Text>
-          </View>
-        ))}
-      </View>
-
-      {/* Current Deals Section */}
-      <Text className="text-lg font-bold mb-3 text-[#0F5329]">
-        Current Deals
-      </Text>
-      <View className="flex-row flex-wrap  justify-between my-4  gap-2">
-        {["PLASTIC", "PAPER", "E-TRASH", "ORGANIC"].map((deal, index) => (
-          <View
-            key={index}
-            className="bg-[#E0E0D5] h-[6rem] rounded-lg shadow-md flex-1 items-center justify-center"
-          >
-            <Text>{deal}</Text>
-          </View>
-        ))}
-      </View>
-
-      <TouchableOpacity
-      onPress={logout}
-      className="bg-[#C0CC8A] p-3 mt-8 rounded-lg shadow-md items-center justify-center">
-        <Text className="text-white">SHOW MORE</Text>
-      </TouchableOpacity>
+      {roles === "household" && <HouseholdScreen />}
+      {roles === "company" && <CompanyScreen />}
     </ScrollView>
   );
 }

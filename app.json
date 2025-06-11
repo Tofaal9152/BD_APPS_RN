@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "my-app",
-    "slug": "my-app",
+    "name": "Compost It",
+    "slug": "compost-it",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./public/images/icon.png",
+    "icon": "./public/compost-it-logo.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
-      "image": "./public/images/splash.png",
+      "image": "./public/compost-it-logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -21,20 +21,27 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./public/images/adaptive-icon.png",
+        "foregroundImage": "./public/compost-it-logo.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./public/images/favicon.png"
+      "favicon": "./public/compost-it-logo.png"
     },
     "plugins": [
       "expo-router"
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "316d3300-a0bc-4105-b1be-34423e9e5c42"
+      }
+    },
+    "owner": "tofaal9152"
   }
 }

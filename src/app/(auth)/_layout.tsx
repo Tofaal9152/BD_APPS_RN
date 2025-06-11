@@ -1,5 +1,5 @@
-import { Slot } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
+import { Slot } from "expo-router";
 import { View } from "react-native";
 
 export default function AuthLayout() {

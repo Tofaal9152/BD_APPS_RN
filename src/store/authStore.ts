@@ -4,6 +4,7 @@ import { create } from "zustand";
 import { AuthState } from "../types/auth";
 
 export const useAuthStore = create<AuthState>((set) => ({
+  role: null,
   id: null,
   token: null,
   isLoading: false,
@@ -59,10 +60,12 @@ export const useAuthStore = create<AuthState>((set) => ({
 
       const token = response?.data?.token;
       const id = response?.data?.user?.id;
+      const role = response?.data?.user?.currentRole;
       console.log("Login success:", response.data);
       await AsyncStorage.setItem("token", token);
       await AsyncStorage.setItem("id", id);
-      set({ token, id });
+      await AsyncStorage.setItem("role", role);
+      set({ token, id, role });
       return {
         success: true,
         message: "Login successful",
@@ -78,16 +81,31 @@ export const useAuthStore = create<AuthState>((set) => ({
     }
   },
 
-  isAuthenticated: async () => {
-    set({ isCheckingAuth: true });
-    try {
-      const token = await AsyncStorage.getItem("token");
-      set({ token, isCheckingAuth: false });
-    } catch (error) {
-      console.error("Auth check failed:", error);
-      set({ isCheckingAuth: false });
-    }
-  },
+ isAuthenticated: async () => {
+  set({ isCheckingAuth: true });
+  try {
+    const [token, id, role] = await Promise.all([
+      AsyncStorage.getItem("token"),
+      AsyncStorage.getItem("id"),
+      AsyncStorage.getItem("role"),
+    ]);
+    set({ token, id, role, isCheckingAuth: false });
+  } catch (error) {
+    console.error("Auth check failed:", error);
+    set({ isCheckingAuth: false });
+  }
+},
+
+  // isAuthenticated: async () => {
+  //   set({ isCheckingAuth: true });
+  //   try {
+  //     const token = await AsyncStorage.getItem("token");
+  //     set({ token, isCheckingAuth: false });
+  //   } catch (error) {
+  //     console.error("Auth check failed:", error);
+  //     set({ isCheckingAuth: false });
+  //   }
+  // },
 
   logout: async () => {
     set({ isLoading: true });
