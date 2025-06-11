@@ -5,11 +5,11 @@ import { useColorScheme } from "~/src/lib/useColorScheme";
 export default function TabsLayout() {
   const { isDarkColorScheme } = useColorScheme();
   const insects = useSafeAreaInsets();
-  console.log("insects", insects);
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
+        
         tabBarActiveTintColor: "#0F5329",
         tabBarInactiveTintColor: "#0F5329B2",
         headerShadowVisible: false,
@@ -17,10 +17,9 @@ export default function TabsLayout() {
           fontWeight: "600",
         },
         tabBarStyle: {
-          backgroundColor: `${isDarkColorScheme ? "#000" : "#fff"}`,
-          borderTopWidth: 0.7,
-          borderTopColor: `${isDarkColorScheme ? "#333" : "#ccc"}`,
-
+          backgroundColor: "#fff",
+          borderTopWidth: 0,
+          // borderTopColor: "#0F5329B2",
           paddingTop: 5,
           paddingBottom: insects.bottom,
           height: 60 + insects.bottom,

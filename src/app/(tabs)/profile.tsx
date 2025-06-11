@@ -12,7 +12,6 @@ import { useQuery } from "@tanstack/react-query";
 import { fetcher } from "~/src/lib/Fetcher";
 import { useAuthStore } from "~/src/store/authStore";
 import { Button } from "~/src/components/ui/button";
-// import EditProfile from "~/src/components/screens/tabs/profile/EditProfile";
 
 const Profile = () => {
   const { logout } = useAuthStore();
@@ -42,16 +41,16 @@ const Profile = () => {
 
   if (isLoading) {
     return (
-      <View className="flex-1 items-center justify-center bg-white dark:bg-black">
+      <View className="flex-1 items-center justify-center bg-white ">
         <ActivityIndicator size="large" color="#0F5329" />
-        <Text className="mt-4 text-[#0F5329] dark:text-white">Loading...</Text>
+        <Text className="mt-4 text-[#0F5329] ">Loading...</Text>
       </View>
     );
   }
 
   if (isError || !user) {
     return (
-      <View className="flex-1 items-center justify-center bg-white dark:bg-black px-6">
+      <View className="flex-1 items-center justify-center bg-white  px-6">
         <Text className="text-red-600 dark:text-red-400 text-lg font-semibold">
           Failed to load profile.
         </Text>
@@ -60,20 +59,20 @@ const Profile = () => {
   }
 
   return (
-    <View className="flex-1 bg-white dark:bg-black px-6 py-10">
+    <View className="flex-1 bg-white  px-6 py-10">
       {/* Avatar + Name Section */}
       <View className="items-center mb-8">
         <View className="w-24 h-24 rounded-full bg-[#C0CC8A] items-center justify-center">
           <FontAwesome5 name="user" size={40} color="#fff" />
         </View>
-        <Text className="mt-4 text-xl font-semibold text-[#0F5329] dark:text-white">
+        <Text className="mt-4 text-xl font-semibold text-[#0F5329] ">
           {user.email}
         </Text>
         <Text className="text-gray-500 text-sm">{user.userType}</Text>
       </View>
 
       {/* User Info */}
-      <View className="space-y-3">
+      <View className="space-y-3 ">
         <InfoRow label="Phone" value={user.phone} />
         <InfoRow label="Email" value={user.email} />
         <InfoRow label="Role" value={user.currentRole} />
@@ -90,11 +89,9 @@ const Profile = () => {
       </View>
 
       {/* Bottom Settings */}
-      <View className="mt-10 border-t border-gray-200 dark:border-gray-700 pt-6 space-y-4">
+      <View className="mt-10  border-gray-200 dark:border-gray-700 pt-6 space-y-4">
         <View className="flex-row justify-between items-center">
-          <Text className="text-[#0F5329] dark:text-white font-medium">
-            Dark Mode
-          </Text>
+          <Text className="text-[#0F5329]  font-medium">Dark Mode</Text>
           <Switch
             value={darkMode}
             onValueChange={() => setDarkMode(!darkMode)}
@@ -105,14 +102,11 @@ const Profile = () => {
 
         <TouchableOpacity className="flex-row items-center gap-2">
           <Ionicons name="settings-outline" size={20} color="#0F5329" />
-          <Text className="text-[#0F5329] dark:text-white font-medium">
-            Settings
-          </Text>
+          <Text className="text-[#0F5329]  font-medium">Settings</Text>
         </TouchableOpacity>
         {/* Edit Profile */}
         {/* <EditProfile user={user} /> */}
         {/* Logout */}
-
         <Button
           onPress={confirmLogout}
           className="mt-4 bg-[#C0CC8A] px-4 py-2 rounded-lg"
@@ -136,12 +130,10 @@ const InfoRow = ({
   iconColor?: string;
 }) => (
   <View className="flex-row justify-between items-center border-b border-gray-100 dark:border-gray-800 py-3">
-    <Text className="text-gray-700 dark:text-gray-300">{label}</Text>
+    <Text className="text-[#0F5329]">{label}</Text>
     <View className="flex-row items-center gap-2">
       {icon && <Ionicons name={icon} size={16} color={iconColor || "#555"} />}
-      <Text className="font-medium text-[#0F5329] dark:text-white">
-        {value}
-      </Text>
+      <Text className="font-medium text-[#0F5329] ">{value}</Text>
     </View>
   </View>
 );

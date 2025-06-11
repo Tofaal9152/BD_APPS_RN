@@ -20,9 +20,11 @@ import api from "~/src/lib/api";
 const EditProfile = ({ user }: any) => {
   const queryClient = useQueryClient();
 
+  const [id, setId] = useState(user?.id || "");
   const [email, setEmail] = useState(user?.email || "");
   const [phone, setPhone] = useState(user?.phone || "");
-  const [password, setPassword] = useState(""); // Optional: don't prefill
+  const [password, setPassword] = useState(user?.password || "");
+  const [userType, setUserType] = useState(user?.userType || "user");
 
   const mutation = useMutation({
     mutationFn: updateProfile,
@@ -36,9 +38,11 @@ const EditProfile = ({ user }: any) => {
 
   const handleSave = () => {
     mutation.mutate({
+      id,
       email,
       phone,
-      password: password || undefined, // Avoid sending empty string
+      password,
+      userType,
     });
   };
 
@@ -63,6 +67,12 @@ const EditProfile = ({ user }: any) => {
         {/* Input fields */}
         <View className="gap-4">
           <TextInput
+            value={id}
+            onChangeText={setId}
+            placeholder="ID"
+            className="border border-gray-300 rounded hidden px-3 py-2 dark:text-white dark:border-gray-600"
+          />
+          <TextInput
             value={email}
             onChangeText={setEmail}
             placeholder="Email"
@@ -80,6 +90,12 @@ const EditProfile = ({ user }: any) => {
             onChangeText={setPassword}
             placeholder="New Password (optional)"
             secureTextEntry
+            className="border border-gray-300 rounded px-3 py-2 dark:text-white dark:border-gray-600"
+          />
+          <TextInput
+            value={userType}
+            onChangeText={setUserType}
+            placeholder="User Type"
             className="border border-gray-300 rounded px-3 py-2 dark:text-white dark:border-gray-600"
           />
         </View>
@@ -100,10 +116,13 @@ export default EditProfile;
 // ~/src/services/profile.ts
 
 const updateProfile = async (data: {
+  id?: string;
   email?: string;
   phone?: string;
   password?: string;
+  userType?: string;
 }) => {
   const response = await api.put("/api/auth/update-profile", data);
+  console.log("Update response:", response.data);
   return response.data;
 };

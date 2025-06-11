@@ -1,4 +1,4 @@
-import { Slot } from "expo-router";
+import { Slot, Stack } from "expo-router";
 import { useEffect, useState } from "react";
 import { ActivityIndicator } from "react-native";
 import "~/global.css";
@@ -35,7 +35,11 @@ export default function RootLayout() {
   return (
     <AppProviders>
       <AuthRedirect />
-      <Slot />
+      <Stack
+        screenOptions={{
+          headerShown: false,
+        }}
+      />
     </AppProviders>
   );
 }

@@ -1,5 +1,4 @@
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { Alert, Text, TouchableOpacity, View } from "react-native";
 
@@ -36,7 +35,7 @@ const SignInForm = () => {
         value={form.emailOrPhone}
         onChangeText={(text) => updateForm("emailOrPhone", text)}
         autoCapitalize="none"
-        className="text-sm"
+        className="text-sm dark:bg-white dark:border-gray-100 dark:text-black"
       />
 
       <View className="relative">
@@ -45,7 +44,7 @@ const SignInForm = () => {
           value={form.password}
           onChangeText={(text) => updateForm("password", text)}
           secureTextEntry={!form.showPassword}
-          className="text-sm"
+          className="text-sm dark:bg-white dark:border-gray-100 dark:text-black"
         />
         <TouchableOpacity
           onPress={() => updateForm("showPassword", !form.showPassword)}

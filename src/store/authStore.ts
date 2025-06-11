@@ -4,6 +4,7 @@ import { create } from "zustand";
 import { AuthState } from "../types/auth";
 
 export const useAuthStore = create<AuthState>((set) => ({
+  id: null,
   token: null,
   isLoading: false,
   isCheckingAuth: true,
@@ -39,6 +40,14 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   login: async (emailOrPhone: string, password: string) => {
     set({ isLoading: true });
+
+    if (!emailOrPhone || !password) {
+      return {
+        success: false,
+        message: "Email/phone and password are required.",
+      };
+    }
+
     try {
       const response = await axios.post(
         `${process.env.EXPO_PUBLIC_BACKEND_URL}/api/auth/login`,
@@ -49,8 +58,11 @@ export const useAuthStore = create<AuthState>((set) => ({
       );
 
       const token = response?.data?.token;
+      const id = response?.data?.user?.id;
+      console.log("Login success:", response.data);
       await AsyncStorage.setItem("token", token);
-      set({ token });
+      await AsyncStorage.setItem("id", id);
+      set({ token, id });
       return {
         success: true,
         message: "Login successful",

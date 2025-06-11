@@ -39,7 +39,7 @@ const RegisterForm = () => {
         value={form.email}
         onChangeText={(text) => updateForm("email", text)}
         keyboardType="email-address"
-        className="text-sm"
+        className="text-sm dark:bg-white dark:border-gray-100 dark:text-black"
         placeholderTextColor=""
       />
       <Input
@@ -47,7 +47,7 @@ const RegisterForm = () => {
         value={form.phone}
         onChangeText={(text) => updateForm("phone", text)}
         keyboardType="phone-pad"
-        className="text-sm"
+        className="text-sm dark:bg-white dark:border-gray-100 dark:text-black"
         placeholderTextColor=""
       />
 
@@ -57,7 +57,7 @@ const RegisterForm = () => {
           value={form.password}
           onChangeText={(text) => updateForm("password", text)}
           secureTextEntry={!form.showPassword}
-          className="text-sm"
+          className="text-sm dark:bg-white dark:border-gray-100 dark:text-black"
           placeholderTextColor=""
         />
         <TouchableOpacity

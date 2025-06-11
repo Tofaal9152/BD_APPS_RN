@@ -11,7 +11,7 @@ export default function AuthLayout() {
       className="flex-1"
     >
       <View className="flex-1">
-        <Slot />
+        <Slot/>
       </View>
     </LinearGradient>
   );
