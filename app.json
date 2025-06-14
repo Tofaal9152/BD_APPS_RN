@@ -23,7 +23,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./public/compost-it-logo.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.tofaal9152.compostit"
     },
     "web": {
       "bundler": "metro",

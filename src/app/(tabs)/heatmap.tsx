@@ -1,6 +1,6 @@
 import React from "react";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
-import MapView, { Heatmap, PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { Heatmap } from "react-native-maps";
 
 const mockPoints = [
   { latitude: 23.8103, longitude: 90.4125, weight: 1 }, // Dhaka
@@ -21,7 +21,6 @@ const Heatmapsec = () => {
       <Text style={styles.title}>📊 Heatmap of Pickup Requests</Text>
       <MapView
         style={styles.map}
-        provider={PROVIDER_GOOGLE}
         initialRegion={{
           latitude: 23.76,
           longitude: 90.39,
